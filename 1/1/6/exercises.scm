@@ -69,3 +69,18 @@ Exercise 1.3
           (foldl + 0 (map square two-largest-args))))
 
 (sum-of-squares-of-two-largest-args 9 1 9) ; 162
+
+
+#|
+Exercise 1.4
+|#
+
+(define (a-plus-abs-b a b)
+  ; if b is greater than 0, operate normally
+  ; if b is less than 0, operate with -, flipping its negation
+  ((if (> b 0) + -) a b))
+
+(a-plus-abs-b 10 6) ; 16
+(a-plus-abs-b 10 -6) ; 16
+
+
