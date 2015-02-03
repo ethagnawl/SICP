@@ -60,3 +60,12 @@ Exercise 1.2
 
 
 #|
+Exercise 1.3
+|#
+
+(define (sum-of-squares-of-two-largest-args x y z)
+        (let ([two-largest-args (cdr (sort (list x y z) <))]
+              [square (lambda (n) (* n n))])
+          (foldl + 0 (map square two-largest-args))))
+
+(sum-of-squares-of-two-largest-args 9 1 9) ; 162
