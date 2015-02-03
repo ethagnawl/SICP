@@ -20,10 +20,10 @@ Exercise 1.6
 
 (new-if (= 2 3) 0 5) ; 5
 
-; (define (sqrt-iter guess x)
-;   (new-if
-;     (good-enough? guess x) guess
-;     (sqrt-iter (improve guess x) x)))
+(define (sqrt-iter guess x)
+  (new-if
+    (good-enough? guess x) guess
+    (sqrt-iter (improve guess x) x)))
 
 ; Since new-if is not a special form, the interpreter will attempt to evaluate
 ; both the (good-enough? 1.0 2.0) operand and the (sqrt-iter (improve 1.0) 2.0)
@@ -84,3 +84,25 @@ Exercise 1.8
 (define (cube-root x) (cube-root-iter 1.0 x))
 
 (cube-root 2) ; 1.259933493449977
+
+
+#|
+Extra Credit
+|#
+
+(define (new-sqrt x)
+
+  (define (good-enough? guess)
+    (< (abs (- (square guess) x)) 0.001))
+
+  (define (improve guess)
+      (average guess (/ x guess)))
+
+  (define (sqrt-iter guess)
+    (if (good-enough? guess)
+      guess
+      (sqrt-iter (improve guess))))
+
+  (sqrt-iter 1.0))
+
+(new-sqrt 2) ; 1.4142156862756097
