@@ -84,3 +84,16 @@ Exercise 1.4
 (a-plus-abs-b 10 -6) ; 16
 
 
+#|
+Exercise 1.5
+|#
+
+(define (p) (p))
+
+(define (test x y)
+  (if (= x 0) 0 y))
+
+; because the interpreter uses applicative-order evaluation - evaluate operators
+; and then apply operand - test expands into: (if (= 0 0) 0 (p)) ... forever
+; because both if conditions are evaluated and p is defined in terms of itself
+(test 0 (p))
