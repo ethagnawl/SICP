@@ -140,3 +140,21 @@ Exercise 1.11
 (f-iterative 10) ; 1892
 
 
+#|
+Exercise 1.12
+|#
+
+(define (pascal-tri dir row column)
+  (write "dir")
+  (pretty-print dir)
+  (write "row")
+  (pretty-print row)
+  (write "column")
+  (pretty-print column)
+  (pretty-print "--------------")
+
+  (cond ((or (< row 1) (< column 1) (> column row)) #f)
+        ((or (= column 1) (= column row)) 1)
+        (else (+ (pascal-tri "left" (- row 1) (- column 1)) (pascal-tri "right" (- row 1) column)))))
+
+(pascal-tri "" 5 3)
