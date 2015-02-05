@@ -51,6 +51,7 @@ Exercise 1.9
 #|
 Exercise 1.10
 |#
+
 (define (A x y)
   (cond ((= y 0) 0)
 	((= x 0) (* 2 y))
@@ -63,12 +64,12 @@ Exercise 1.10
 (A 3 3) ; 65536
 
 
-(define (f n) (A 0 n))
+(define (f-iterative n) (A 0 n))
 
-(f 0) ; 0
-(f 1) ; 2
-(f 2) ; 4
-(f 3) ; 6
+(f-iterative 0) ; 0
+(f-iterative 1) ; 2
+(f-iterative 2) ; 4
+(f-iterative 3) ; 6
 
 
 (define (g n) (A 1 n))
@@ -95,3 +96,47 @@ Exercise 1.10
 (k 2) ; 20
 (k 3) ; 45
 (k 4) ; 80
+
+
+#|
+Exercise 1.11
+|#
+
+(define (f-recursive n)
+  (cond
+    ((< n 3)
+     n)
+    (else
+      (+  (f-recursive (- n 1))
+      (* 2 (f-recursive (- n 2)))
+      (* 3 (f-recursive (- n 3)))))))
+
+(f-recursive 2) ; 2
+(f-recursive 3) ; 4
+(f-recursive 10) ; 1892
+
+
+(define (f-iterative-iterate a b c n)
+  ; (write "a:")
+  ; (pretty-print a)
+  ; (write "b:")
+  ; (pretty-print b)
+  ; (write "c:")
+  ; (pretty-print c)
+  ; (write "n:")
+  ; (pretty-print n)
+  (if (< n 3)
+      a
+      (f-iterative-iterate
+      (+ a (* 2 b) (* 3 c))
+      a
+      b
+      (- n 1))))
+
+(define (f-iterative n) (f-iterative-iterate 2 1 0 n))
+
+(f-iterative 2) ; 2
+(f-iterative 3) ; 4
+(f-iterative 10) ; 1892
+
+
