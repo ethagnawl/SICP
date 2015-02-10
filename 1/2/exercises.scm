@@ -158,3 +158,11 @@ Exercise 1.12
         (else (+ (pascal-tri "left" (- row 1) (- column 1)) (pascal-tri "right" (- row 1) column)))))
 
 (pascal-tri "" 5 3)
+
+#|
+Exercise 1.13
+|#
+
+; not happening
+
+#|
