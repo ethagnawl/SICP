@@ -235,3 +235,30 @@ Exercise 1.15
 ; starting input angle and only one more step would be required by this
 ; procedure.
 
+#|
+Exercise 1.16
+|#
+
+; https://github.com/psholtz/MIT-SICP/blob/master/Section-1.2/mit-scheme/exercise1-16.scm
+
+(define (even? n) (= (remainder n 2) 0))
+
+(define (square n) (* n n))
+
+(define (fast-expt b n)
+  (fast-expt-iter b n 1))
+
+(define (fast-expt-iter b n a)
+  (cond ((= n 0) a)
+        ((even? n) (fast-expt-iter (square b) (/ n 2) a))
+        (else
+          (pretty-print "b")
+          (pretty-print b)
+          (pretty-print "n")
+          (pretty-print (- n 1))
+          (pretty-print "a")
+          (pretty-print (* a b))
+
+          (fast-expt-iter b (- n 1) (* a b)))))
+
+(fast-expt 2 2)
