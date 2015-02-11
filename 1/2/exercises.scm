@@ -262,3 +262,32 @@ Exercise 1.16
           (fast-expt-iter b (- n 1) (* a b)))))
 
 (fast-expt 2 2)
+
+
+#|
+Exercise 1.17
+|#
+(define (double n) (+ n n))
+
+(double 5)
+(double 10)
+
+
+(define (even? n) (= (remainder n 2) 0))
+
+(even? 10)
+(even? 11)
+
+
+(define (halve n) (/ n 2))
+
+(halve 10)
+(halve 20)
+
+
+(define (my-times n x)
+  (cond ((= 0 x) 0)
+        ((even? x) (double (* n (halve x))))
+        (else (+ n (my-times n (- x 1))))))
+
+(my-times 13 5)
