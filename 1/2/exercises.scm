@@ -267,22 +267,23 @@ Exercise 1.16
 #|
 Exercise 1.17
 |#
+
 (define (double n) (+ n n))
 
-(double 5)
-(double 10)
+(double 5) ; 10
+(double 10) ; 20
 
 
 (define (even? n) (= (remainder n 2) 0))
 
-(even? 10)
-(even? 11)
+(even? 10) ; #t
+(even? 11) ; #f
 
 
 (define (halve n) (/ n 2))
 
-(halve 10)
-(halve 20)
+(halve 10) ; 5
+(halve 20) ; 10
 
 
 (define (my-times n x)
@@ -290,4 +291,6 @@ Exercise 1.17
         ((even? x) (double (* n (halve x))))
         (else (+ n (my-times n (- x 1))))))
 
-(my-times 13 5)
+(my-times 2 10) ; 20
+(my-times 10 2) ; 20
+(my-times 13 5) ; 65
