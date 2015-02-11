@@ -294,3 +294,21 @@ Exercise 1.17
 (my-times 2 10) ; 20
 (my-times 10 2) ; 20
 (my-times 13 5) ; 65
+
+
+#|
+Exercise 1.18
+|#
+
+(define (my-new-times-iter n x memo)
+  (cond ((= 0 x) memo)
+        ((even? x) (my-new-times-iter (double n) (halve x) memo))
+        (else (my-new-times-iter n (- x 1) (+ n memo)))))
+
+(define (my-new-times n x)
+  (my-new-times-iter n x 0))
+
+(my-new-times 2 2) ; 4
+(my-new-times 2 10) ; 20
+(my-new-times 10 2) ; 20
+(my-new-times 33 11) ; 363
