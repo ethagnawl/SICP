@@ -395,12 +395,13 @@ Exercise 1.21
 
 (define (find-divisor n test-divisor)
 
-  (pretty-print "")
-  (pretty-print "<--------")
-  (pretty-print (~a "n: " n))
-  (pretty-print (~a "test-divisor: " test-divisor))
-  (pretty-print "-------->")
-  (pretty-print "")
+  ; you don't want this running during ex 1.22
+  ; (pretty-print "")
+  ; (pretty-print "<--------")
+  ; (pretty-print (~a "n: " n))
+  ; (pretty-print (~a "test-divisor: " test-divisor))
+  ; (pretty-print "-------->")
+  ; (pretty-print "")
 
   (cond ((> (square test-divisor) n) n)
         ((divides? test-divisor n) test-divisor)
@@ -415,3 +416,67 @@ Exercise 1.21
 
 (smallest-divisor 19999) ; 7
 
+
+#|
+Exercise 1.22
+|#
+
+; cribbed from:
+; https://github.com/psholtz/MIT-SICP/blob/master/Section-1.2/mit-scheme/exercise1-22.scm
+; http://www.billthelizard.com/2010/02/sicp-exercise-122-timed-prime-test.html
+; https://stackoverflow.com/questions/2195105/is-there-an-equivalent-to-lisps-runtime-primitive-in-scheme
+
+(define (prime? n)
+  (= n (smallest-divisor n)))
+
+(prime? 3) ; #t
+(prime? 4) ; #f
+
+(define (report-prime n elapsed-time)
+  (newline)
+  (display n)
+  (display " (")
+  (display elapsed-time)
+  (display ")"))
+
+(define (start-prime-test n start-time)
+  (cond ((prime? n)
+         (report-prime n (- (current-inexact-milliseconds) start-time))
+         #t)
+        (else #f)))
+
+(define (timed-prime-test n)
+  (start-prime-test n (current-inexact-milliseconds)))
+
+(define (search-for-primes a b)
+  (define (search n)
+    (cond ((<= n b) (timed-prime-test n)))
+    (cond ((< n b) (search (+ n 2)))))
+  (if (even? a)
+    (search (+ a 1))
+    (search a)))
+
+(search-for-primes 1000 1050)
+
+(search-for-primes 10000 10050)
+
+(search-for-primes 100000 100050)
+
+(define (search-for-n-primes a n)
+  (define (search j c)
+    (let ((next-j (+ j 2)))
+      (cond ((< c n)
+             (if (timed-prime-test j)
+               (search next-j (+ c 1))
+               (search next-j c))))))
+  (if (even? a)
+    (search (+ a 1) 0)
+    (search a 0)))
+
+(search-for-n-primes 1000 3)
+
+(search-for-n-primes 10000 3)
+
+(search-for-n-primes 100000 3)
+
+(search-for-n-primes 1000000 3)
