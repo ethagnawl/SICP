@@ -377,3 +377,41 @@ Exercise 1.20
 ; applicative - 4
 
 
+#|
+Exercise 1.21
+|#
+
+; cribbed from
+; http://www.billthelizard.com/2010/01/sicp-exercise-121-smallest-divisor.html
+
+; why do i need to keep defining this??
+(define (square n) (* n n))
+
+(define (divides? a b)
+  (= (remainder b a) 0))
+
+(divides? 4 2) ; #f
+(divides? 2 4) ; #t
+
+(define (find-divisor n test-divisor)
+
+  (pretty-print "")
+  (pretty-print "<--------")
+  (pretty-print (~a "n: " n))
+  (pretty-print (~a "test-divisor: " test-divisor))
+  (pretty-print "-------->")
+  (pretty-print "")
+
+  (cond ((> (square test-divisor) n) n)
+        ((divides? test-divisor n) test-divisor)
+        (else (find-divisor n (+ test-divisor 1)))))
+
+(define (smallest-divisor n)
+  (find-divisor n 2))
+
+(smallest-divisor 199) ; 199
+
+(smallest-divisor 1999) ; 1999
+
+(smallest-divisor 19999) ; 7
+
