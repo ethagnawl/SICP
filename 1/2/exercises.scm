@@ -312,3 +312,53 @@ Exercise 1.18
 (my-new-times 2 10) ; 20
 (my-new-times 10 2) ; 20
 (my-new-times 33 11) ; 363
+
+
+#|
+Exercise 1.19
+|#
+
+(define (square n) (* n n))
+
+(define (sum-of-squares a b) (+ (square a) (square b)))
+
+(define (log-fib-iter a b p q count)
+  ; the Fibonacci numbers are produced by the nth power of the transformation
+  ; T, or Tn, starting with the pair (1, 0).
+
+  ; as usual, cribbed from:
+  ; http://www.billthelizard.com/2010/01/sicp-exercise-119-computing-fibonacci.html
+  ; and
+  ; https://github.com/psholtz/MIT-SICP/blob/master/Section-1.2/mit-scheme/exercise1-19.scm
+
+  (pretty-print "")
+  (pretty-print "<--------")
+  (pretty-print (~a "a:" a))
+  (pretty-print (~a "b:" b))
+  (pretty-print (~a "p:" p))
+  (pretty-print (~a "q:" q))
+  (pretty-print (~a "count:" count))
+  (pretty-print "-------->")
+  (pretty-print "")
+
+  (cond ((= count 0) b)
+        ((even? count)
+         (log-fib-iter a
+                       b
+                       (sum-of-squares p q)
+                       (+ (square q) (* 2 p q))
+                       (/ count 2)))
+        (else
+          (log-fib-iter (+ (* b q) (* a q) (* a p))
+                        (+ (* b p) (* a q))
+                        p
+                        q
+                        (- count 1)))))
+
+(define (log-fib n)
+  (log-fib-iter 1 0 0 1 n))
+
+(log-fib 3) ; 2
+(log-fib 4) ; 3
+(log-fib 5) ; 5
+
