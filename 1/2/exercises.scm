@@ -362,3 +362,18 @@ Exercise 1.19
 (log-fib 4) ; 3
 (log-fib 5) ; 5
 
+
+#|
+Exercise 1.20
+|#
+
+(define (gcd a b)
+  (if (= b 0)
+    a
+    (gcd b (remainder a b))))
+
+; http://www.billthelizard.com/2010/01/sicp-exercise-120-gcd.html
+; normal - 18
+; applicative - 4
+
+
