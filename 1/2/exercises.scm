@@ -663,3 +663,37 @@ Exercise 1.27
 
 (fermat-full 6601) ; false t
 
+
+#|
+Exercise 1.28
+|#
+
+; http://www.billthelizard.com/2010/03/sicp-exercise-128-miller-rabin-test.html
+
+(define (even? n) (= (remainder n 2) 0))
+
+(define (square-check x m)
+  (if (and
+        (not (or (= x 1) (= x (- m 1))))
+        (= (remainder (* x x) m) 1))
+    0 ; non-trivial square root was found
+    (remainder (* x x) m)))
+
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (square-check (expmod base (/ exp 2) m) m))
+        (else
+          (remainder (* base (expmod base (- exp 1) m))
+                     m))))
+
+(define (miller-rabin-test n)
+  (define (try-it a)
+    (= (expmod a (- n 1) n) 1))
+  (try-it (+ 2 (random (- n 2)))))
+
+(miller-rabin-test 4) ; f
+
+(miller-rabin-test 3) ; t
+
+(miller-rabin-test 1009) ; (usually) t
