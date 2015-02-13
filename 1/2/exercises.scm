@@ -516,4 +516,58 @@ Exercise 1.23
     (search (+ a 1))
     (search a)))
 
-(search-for-primes 1000 1050)
+(new-search-for-primes 1000 1050)
+
+
+#|
+Exercise 1.24
+|#
+
+; http://www.billthelizard.com/2010/02/sicp-exercise-124-fermat-test.html
+
+(define (square x) (* x x))
+
+(define (ex124-fast-prime? n times)
+  (cond ((= times 0) true)
+        ((ex124-fermat-test n) (ex124-fast-prime? n (- times 1)))
+        (else false)))
+
+(define (ex124-start-prime-test n start-time)
+  (cond ((ex124-fast-prime? n 100)
+         (ex124-report-prime (-
+                               (current-inexact-milliseconds)
+                               start-time)))))
+
+(define (ex124-timed-prime-test n)
+  (newline)
+  (display n)
+  (ex124-start-prime-test n (current-inexact-milliseconds)))
+
+(define (ex124-report-prime elapsed-time)
+  (display " *** ")
+  (display elapsed-time))
+
+(define (ex124-expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder (square (ex124-expmod base (/ exp 2) m))
+                    m))
+        (else
+          (remainder (* base (ex124-expmod base (- exp 1) m))
+                     m))))
+
+(define (ex124-fermat-test n)
+  ; r = n-1^n % n; r = n if n is prime
+  (define (try-it a)
+    (= (ex124-expmod a n n) a))
+  (try-it (+ 1 (random (- n 1)))))
+
+(define (ex124-search-for-primes a b)
+  (define (search n)
+    (cond ((<= n b) (ex124-timed-prime-test n)))
+    (cond ((< n b) (search (+ n 2)))))
+  (if (even? a)
+    (search (+ a 1))
+    (search a)))
+
+(ex124-search-for-primes 1000 1050)
