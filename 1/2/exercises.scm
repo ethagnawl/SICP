@@ -480,3 +480,40 @@ Exercise 1.22
 (search-for-n-primes 100000 3)
 
 (search-for-n-primes 1000000 3)
+
+
+#|
+Exercise 1.23
+|#
+
+; https://github.com/psholtz/MIT-SICP/blob/master/Section-1.2/mit-scheme/exercise1-23.scm
+
+(define (new-find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+        ((divides? test-divisor n) test-divisor)
+        (else (new-find-divisor n (next test-divisor)))))
+
+(define (new-smallest-divisor n)
+  (new-find-divisor n 2))
+
+(define (new-prime? n)
+  (= n (new-smallest-divisor n)))
+
+(define (new-start-prime-test n start-time)
+  (cond ((new-prime? n)
+         (report-prime n (- (current-inexact-milliseconds) start-time))
+         #t)
+        (else #f)))
+
+(define (new-timed-prime-test n)
+  (new-start-prime-test n (current-inexact-milliseconds)))
+
+(define (new-search-for-primes a b)
+  (define (search n)
+    (cond ((<= n b) (new-timed-prime-test n)))
+    (cond ((< n b) (search (+ n 2)))))
+  (if (even? a)
+    (search (+ a 1))
+    (search a)))
+
+(search-for-primes 1000 1050)
