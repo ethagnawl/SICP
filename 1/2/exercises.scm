@@ -571,3 +571,29 @@ Exercise 1.24
     (search a)))
 
 (ex124-search-for-primes 1000 1050)
+
+
+#|
+Exercise 1.25
+|#
+
+; q. Would using fast-exp to simplify expmod have a negative effect on the
+; performance of the fast-prime-tester?
+
+; a. Yes.
+
+; From the expmod source:
+; The reduction steps in the cases where the exponent e is greater than 1 are
+; based on the fact that, for any integers x, y, and m, we can find the
+; remainder of x times y modulo m by computing separately the remainders of x
+; modulo m and y modulo m, multiplying these, and then taking the remainder of
+; the result modulo m. For instance, in the case where e is even, we compute
+; the remainder of be/2 modulo m, square this, and take the remainder modulo m.
+; This technique is useful because it means we can perform our computation
+; without ever having to deal with numbers much larger than m.
+
+; "The important point is that the original expmod procedure uses successive
+; squaring to perform its computations without ever having to deal with numbers
+; larger than m." -
+; http://www.billthelizard.com/2010/02/sicp-exercise-125-closer-look-at-expmod.html
+
