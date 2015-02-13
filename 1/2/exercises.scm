@@ -612,3 +612,54 @@ Exercise 1.26
 ; expmod grows exponentially, instead of doubling. (The original expmod is a
 ; 0(log n) process and the version using explicit multiplication is 0(log 2n).)
 
+
+#|
+Exercise 1.27
+|#
+
+; Demonstrate that selected Carmicheal numbers (561, 1105, 1729, 2465, 2821,
+; and 6601) do fool the Fermat test.
+
+; http://www.billthelizard.com/2010/02/sicp-exercise-127-carmichael-numbers.html
+
+(define (square x) (* x x))
+
+(define (even? n) (= (remainder n 2) 0))
+
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder (square (expmod base (/ exp 2) m))
+                    m))
+        (else
+          (remainder (* base (expmod base (- exp 1) m))
+                     m))))
+
+(define (fermat-test n a)
+  (= (expmod a n n) a))
+
+(define (fermat-full n)
+  (define (iter a)
+    (cond ((= a 1) #t)
+          ((not (fermat-test n a)) #f)
+          (else (iter (- a 1)))))
+  (iter (- n 1)))
+
+(fermat-full 4) ; actually f
+
+(fermat-full 3) ; actually t
+
+(fermat-full 1009) ; actually t
+
+(fermat-full 561) ; false t
+
+(fermat-full 1105) ; false t
+
+(fermat-full 1729) ; false t
+
+(fermat-full 2465) ; false t
+
+(fermat-full 2821) ; false t
+
+(fermat-full 6601) ; false t
+
