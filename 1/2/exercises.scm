@@ -597,3 +597,18 @@ Exercise 1.25
 ; larger than m." -
 ; http://www.billthelizard.com/2010/02/sicp-exercise-125-closer-look-at-expmod.html
 
+
+#|
+Exercise 1.26
+|#
+
+; http://www.billthelizard.com/2010/02/sicp-exercise-126-explicit.html
+
+; q. why does using explicit multiplication (instead of square) in expmod
+; result in a decrease in performance?
+
+; a. Using explicit multiplication changes expmod from a linear recursive
+; process into a tree recursive process, where the number of recursive calls to
+; expmod grows exponentially, instead of doubling. (The original expmod is a
+; 0(log n) process and the version using explicit multiplication is 0(log 2n).)
+
