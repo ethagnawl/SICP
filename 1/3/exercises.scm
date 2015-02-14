@@ -118,3 +118,36 @@ Exercise 1.31
 (wallis-pi linear-iterative-product 10) ; 3.0677038066434985
                                         ; which differs sligtly from the
                                         ; linear-recursive-product version
+
+
+#|
+Exercise 1.32
+|#
+
+(define (inc x) (+ 1 x))
+
+(define (linear-recursive-accumulate combiner null-value term a next b)
+  (if (> a b)
+    null-value
+    (combiner
+      (term a)
+      (linear-recursive-accumulate combiner null-value term (next a) next b) )))
+
+; sum
+((lambda (a b) (linear-recursive-accumulate + 0 identity a inc b)) 0 10) ; 55
+
+; product
+((lambda (a b) (linear-recursive-accumulate * 1 identity a inc b)) 1 5) ; 120
+
+(define (linear-iterative-accumulate combiner null-value term a next b)
+  (letrec ([iter (lambda (a result)
+                   (if (> a b)
+                     result
+                     (iter (next a) (combiner (term a) result))))])
+    (iter a null-value)))
+
+; sum
+((lambda (a b) (linear-iterative-accumulate + 0 identity a inc b)) 0 10) ; 55
+
+; product
+((lambda (a b) (linear-iterative-accumulate * 1 identity a inc b)) 1 5) ; 120
