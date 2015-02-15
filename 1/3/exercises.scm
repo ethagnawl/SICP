@@ -200,3 +200,21 @@ Exercise 1.33
 
 (product-of-coprimes 10) ; 189
 (product-of-coprimes 11) ; 362880
+
+
+#|
+Exercise 1.34
+|#
+
+(define (f g) (g 2))
+
+(f square)
+
+(f (lambda (z) (* z (+ z 1))))
+
+(f f)
+; evaluation:
+; (f f)
+; (f 2)
+; (2 2)
+
