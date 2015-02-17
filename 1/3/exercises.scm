@@ -404,9 +404,29 @@ Exercise 1.43
   (if (= n 1)
     f
     ; why does this variant cause an out of memory error?!
-    ; (compose f (repeated f (- 1 n)))))
+    ; (compose f (repeated f (- 1 n)))
     (compose f (repeated f (- n 1)))))
 
 (define (square n) (* n n))
 ((repeated square 2) 6) ; 1296
 
+
+#|
+Exercise 1.44
+|#
+
+; http://www.billthelizard.com/2010/08/sicp-144-smoothing-function.html
+
+(define (smooth f dx)
+  (lambda (x) (/
+               (+
+                 (f x)
+                 (f (+ x dx))
+                 (f (- x dx)))
+               3)))
+
+((smooth sin 0.7) (/ pi 2)) ; 0.8432281248563256
+
+(define (n-fold-smooth f dx n) (repeated (smooth f dx) n))
+
+((n-fold-smooth sin 0.7 2) (/ pi 2)) ; 0.6297176112540723
