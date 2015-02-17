@@ -373,3 +373,17 @@ Exercise 1.40
        c)))
 
 (newtons-method (cubic 3 -2.4 6) 1) ; -3.9813366488305104
+
+
+#|
+Exercise 1.41
+|#
+
+(define (double f) (lambda (x) (f (f x))))
+(define (adder x) (lambda (xx) (+ x xx)))
+(define (add1 x) ((adder 1) x))
+(add1 1) ; 2
+((double add1) 2) ; 4
+(((double (double double)) (lambda (x) (+ 1 x))) 5) ; 21
+
+
