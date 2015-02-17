@@ -293,3 +293,21 @@ Exercise 1.37
 (cont-frac-iter (lambda (i) 1.0) (lambda (i) 1.0) 10) ; 0.6179775280898876
 
 
+#|
+Exercise 1.38
+|#
+
+; http://www.billthelizard.com/2010/07/sicp-137-138-and-139-continued.html
+
+(define (d i)
+  (if (not (= 0 (remainder (+ i 1) 3)))
+    1
+    (* 2 (/ (+ i 1) 3))))
+
+(d 8) ; 6
+
+(define e (+ 2 (cont-frac (lambda (i) 1.0) d 10)))
+
+(display e) ; 2.7182817182817183
+
+
