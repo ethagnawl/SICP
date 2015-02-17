@@ -387,3 +387,12 @@ Exercise 1.41
 (((double (double double)) (lambda (x) (+ 1 x))) 5) ; 21
 
 
+#|
+Exercise 1.42
+|#
+
+(define (compose f g) (lambda (x) (f (g x))))
+
+((compose (lambda (x) (* x x)) (lambda (x) (+ 1 x))) 6) ; 49
+
+
