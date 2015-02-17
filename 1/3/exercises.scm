@@ -260,3 +260,36 @@ Exercise 1.36
 
 (fixed-point-with-logging (lambda (x) (/ (log 1000) (log x))) 2.0)
 (fixed-point-with-logging (lambda (x) (average x (/ (log 1000) (log x)))) 2.0)
+
+
+#|
+Exercise 1.37
+|#
+
+; http://www.billthelizard.com/2010/07/sicp-137-138-and-139-continued.html
+
+(define (cont-frac n d k)
+  (define (frac i)
+    (if (< i k)
+      (/ (n i) (+ (d i) (frac (+ i 1))))
+      (/ (n i) (d i))))
+  (frac 1))
+
+(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 5) ; 0.625
+(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 8) ; 0.6176470588235294
+(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 9) ; 0.6181818181818182
+(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 10) ; 0.6179775280898876
+
+(define (cont-frac-iter n d k)
+  (define (frac-iter i result)
+    (if (= i 0)
+      result
+      (frac-iter (- i 1) (/ (n i) (+ (d i) result)))))
+  (frac-iter (- k 1) (/ (n k) (d k))))
+
+(cont-frac-iter (lambda (i) 1.0) (lambda (i) 1.0) 5) ; 0.625
+(cont-frac-iter (lambda (i) 1.0) (lambda (i) 1.0) 8) ; 0.6176470588235294
+(cont-frac-iter (lambda (i) 1.0) (lambda (i) 1.0) 9) ; 0.6181818181818182
+(cont-frac-iter (lambda (i) 1.0) (lambda (i) 1.0) 10) ; 0.6179775280898876
+
+
