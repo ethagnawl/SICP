@@ -311,3 +311,23 @@ Exercise 1.38
 (display e) ; 2.7182817182817183
 
 
+#|
+Exercise 1.39
+|#
+
+; http://www.billthelizard.com/2010/07/sicp-137-138-and-139-continued.html
+
+(define (square x) (* x x))
+
+(define (tan-cf x k)
+  (define (n k)
+    (if (= k 1)
+      x
+      (- (square x))))
+  (define (d k)
+    (- (* 2 k) 1))
+  (cont-frac n d k))
+
+(tan (/ pi 6))        ; 0.5773502691896257
+
+(tan-cf (/ pi 6) 10)  ; 0.5773502691896257
