@@ -396,3 +396,17 @@ Exercise 1.42
 ((compose (lambda (x) (* x x)) (lambda (x) (+ 1 x))) 6) ; 49
 
 
+#|
+Exercise 1.43
+|#
+
+(define (repeated f n)
+  (if (= n 1)
+    f
+    ; why does this variant cause an out of memory error?!
+    ; (compose f (repeated f (- 1 n)))))
+    (compose f (repeated f (- n 1)))))
+
+(define (square n) (* n n))
+((repeated square 2) 6) ; 1296
+
