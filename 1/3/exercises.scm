@@ -459,3 +459,35 @@ Exercise 1.45
 (nth-root 340282366920938463463374607431768211456 128) ; 2.0000000000082006
 
 
+#|
+Exercise 1.46
+|#
+
+; http://www.billthelizard.com/2010/08/sicp-146-iterative-improvement.html
+
+(define (iterative-improve good-enough? improve)
+  (define (iter-imp guess)
+    (if (good-enough? guess)
+      guess
+      (iter-imp (improve guess))))
+  iter-imp)
+
+(define (sqrt x)
+  ((iterative-improve (lambda (guess)
+                        (< (abs (- (square guess) x))
+                           0.001))
+                      (lambda (guess)
+                        (average guess (/ x guess))))
+   1.0))
+
+(sqrt 25) ; 5.000023178253949
+
+(define (fixed-point f first-guess)
+  ((iterative-improve (lambda (guess)
+                        (< (abs (- (f guess) guess))
+                           0.00001))
+                      (lambda (guess)
+                        (f guess)))
+   first-guess))
+
+(fixed-point (lambda (x) (+ 1 (/ 1 x))) 2.0) ; 1.6180371352785146
