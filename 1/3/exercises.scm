@@ -430,3 +430,32 @@ Exercise 1.44
 (define (n-fold-smooth f dx n) (repeated (smooth f dx) n))
 
 ((n-fold-smooth sin 0.7 2) (/ pi 2)) ; 0.6297176112540723
+
+
+#|
+Exercise 1.45
+|#
+
+; http://www.billthelizard.com/2010/08/sicp-145-computing-nth-roots.html
+
+(define (average x y) (/ (+ x y) 2.0))
+
+(define (average-damp f) (lambda (x) (average x (f x))))
+
+(define (log2 x) (/ (log x) (log 2)))
+
+(define (nth-root x n)
+  (fixed-point
+    ((repeated average-damp (floor (log2 n)))
+     (lambda (y) (/ x (expt y (- n 1)))))
+    1.0))
+
+(nth-root 10000 4) ; 10.0
+
+(nth-root 4294967296 32) ; 2.000000000000006
+
+(nth-root 18446744073709551616 64) ; 2.0000000000000853
+
+(nth-root 340282366920938463463374607431768211456 128) ; 2.0000000000082006
+
+
