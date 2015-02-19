@@ -112,3 +112,21 @@ Exercise 2.3
 (define alt-rec (make-alt-rect alt-a 2 10))
 (display (rect-perimeter alt-rec))
 (display (rect-area alt-rec))
+
+
+#|
+Exercise 2.4
+|#
+
+(define (my-cons x y)
+  (lambda (m) (m x y)))
+
+(define (my-car z)
+  (z (lambda (p q) p)))
+
+(display (my-car (my-cons 1 2))) ; 1
+
+(define (my-cdr z)
+  (z (lambda (p q) q)))
+
+(display (my-cdr (my-cons 1 2))) ; 2
