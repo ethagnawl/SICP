@@ -130,3 +130,37 @@ Exercise 2.4
   (z (lambda (p q) q)))
 
 (display (my-cdr (my-cons 1 2))) ; 2
+
+
+#|
+Exercise 2.5
+|#
+
+; http://www.billthelizard.com/2010/10/sicp-25-representing-pairs-as-product.html
+
+(define (num-divs n d)
+  (define (iter x result)
+    (if (= 0 (remainder x d))
+      (iter (/ x d) (+ 1 result))
+      result))
+  (iter n 0))
+
+; (num-divs 23328 2) ; 5
+
+; (num-divs 23328 3) ; 6
+
+(define (my-new-cons a b)
+  (* (expt 2 a)
+     (expt 3 b)))
+
+; (my-new-cons 1 2) ; 18
+
+(define (my-new-car x)
+  (num-divs x 2))
+
+(my-new-car (my-new-cons 1 2)) ; 1
+
+(define (my-new-cdr x)
+  (num-divs x 3))
+
+(my-new-cdr (my-new-cons 1 2)) ; 2
