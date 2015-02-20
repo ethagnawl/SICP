@@ -258,4 +258,29 @@ Exercise 2.7
 
 (define b (make-interval 10 20))
 
+(define c (make-interval 5 20))
+
 (add-interval a b) ; (15 . 30)
+
+
+#|
+Exercise 2.8
+|#
+
+(define (sub-interval x y)
+  (make-interval (- (lower-bound x) (upper-bound y))
+                 (- (upper-bound x) (lower-bound y))))
+
+(define d (make-interval 1 10))
+
+(define e (make-interval 50 100))
+
+(define f (make-interval 5 20))
+
+(sub-interval e d) ; (40 . 99)
+
+(sub-interval d e) ; (-99 . -40)
+
+(sub-interval d f) ; (-19 . 5)
+
+(sub-interval f d) ; (-5 . 19)
