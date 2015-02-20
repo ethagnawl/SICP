@@ -164,3 +164,64 @@ Exercise 2.5
   (num-divs x 3))
 
 (my-new-cdr (my-new-cons 1 2)) ; 2
+
+
+#|
+Exercise 2.6
+|#
+
+; http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html
+
+(define (inc n) (+ n 1))
+
+(define (zero f) (lambda (x) x))
+
+(define (add-1 n)
+  (lambda (f) (
+    lambda (x)
+      (f ((n f) x)))))
+
+((zero inc) 0) ; 0
+
+((zero inc) 1) ; 1
+
+((zero inc) 2) ; 2
+
+; (define one (add-1 zero))
+
+; ((one inc) 0) ; 1
+
+; ; same as (((add-1 zero) inc) 1) ; 2
+; ((one inc) 1) ; 2
+
+; (define two (add-1 one))
+
+; ((two inc) 0) ; 2
+; ((two inc) 1) ; 3
+
+(define (one f) (lambda (x) (f x)))
+
+(define (two f) (lambda (x) (f (f x))))
+
+((one inc) 0) ; 1
+((one inc) 1) ; 2
+
+((two inc) 3) ; 5
+((two inc) 5) ; 7
+
+(define (add-church m n)
+  (lambda (f)
+    (lambda (x)
+      ((m f) ((n f) x)))))
+
+(define three (add-church one two))
+
+((three inc) 0) ; 3
+
+(define four (add-church two two))
+
+((four inc) 0)
+
+(define seven (add-church three four))
+
+((seven inc) 0)
