@@ -231,6 +231,8 @@ Exercise 2.6
 Exercise 2.7
 |#
 
+; http://www.billthelizard.com/2010/12/sicp-27-211-extended-exercise-interval.html
+
 (define (add-interval x y)
   (make-interval (+ (lower-bound x) (lower-bound y))
                  (+ (upper-bound x) (upper-bound y))))
@@ -267,6 +269,8 @@ Exercise 2.7
 Exercise 2.8
 |#
 
+; http://www.billthelizard.com/2010/12/sicp-27-211-extended-exercise-interval.html
+
 (define (sub-interval x y)
   (make-interval (- (lower-bound x) (upper-bound y))
                  (- (upper-bound x) (lower-bound y))))
@@ -284,3 +288,133 @@ Exercise 2.8
 (sub-interval d f) ; (-19 . 5)
 
 (sub-interval f d) ; (-5 . 19)
+
+
+#|
+Exercise 2.9
+|#
+
+; http://www.billthelizard.com/2010/12/sicp-27-211-extended-exercise-interval.html
+
+(define aa (make-interval 2 4))
+
+(define bb (make-interval 5 10))
+
+(define cc (make-interval 10 15))
+
+(mul-interval aa bb) ; (10 . 40)
+
+(mul-interval aa cc) ; (20 . 60)
+
+; The intervals b and c have the same width, but when we multiply each of them
+; by interval a, the resulting intervals have different widths. This means that
+; the width of the product of two intervals cannot be a function of only the
+; widths of the operands.
+
+
+#|
+Exercise 2.10
+|#
+
+; http://www.billthelizard.com/2010/12/sicp-27-211-extended-exercise-interval.html
+
+(define (spans-zero? y)
+  (and (<= (lower-bound y) 0)
+       (>= (upper-bound y) 0)))
+
+(define (div-interval x y)
+  (if (spans-zero? y)
+    (error "Error: The denominator should not span 0.")
+    (mul-interval x
+                  (make-interval (/ 1.0 (upper-bound y))
+                                 (/ 1.0 (lower-bound y))))))
+
+(define aaa (make-interval 2 5))
+
+(define bbb (make-interval -2 2))
+
+(div-interval aaa bbb) ; Error: The denominator should not span 0.
+
+
+#|
+Exercise 2.11
+|#
+
+; http://www.billthelizard.com/2010/12/sicp-27-211-extended-exercise-interval.html
+
+(define (mul-interval x y)
+  (let ((xlo (lower-bound x))
+        (xhi (upper-bound x))
+        (ylo (lower-bound y))
+        (yhi (upper-bound y)))
+    (cond ((and (>= xlo 0)
+                (>= xhi 0)
+                (>= ylo 0)
+                (>= yhi 0))
+           ; [+, +] * [+, +]
+           (make-interval (* xlo ylo) (* xhi yhi)))
+          ((and (>= xlo 0)
+                (>= xhi 0)
+                (<= ylo 0)
+                (>= yhi 0))
+           ; [+, +] * [-, +]
+           (make-interval (* xhi ylo) (* xhi yhi)))
+          ((and (>= xlo 0)
+                (>= xhi 0)
+                (<= ylo 0)
+                (<= yhi 0))
+           ; [+, +] * [-, -]
+           (make-interval (* xhi ylo) (* xlo yhi)))
+          ((and (<= xlo 0)
+                (>= xhi 0)
+                (>= ylo 0)
+                (>= yhi 0))
+           ; [-, +] * [+, +]
+           (make-interval (* xlo yhi) (* xhi yhi)))
+          ((and (<= xlo 0)
+                (>= xhi 0)
+                (<= ylo 0)
+                (>= yhi 0))
+           ; [-, +] * [-, +]
+           (make-interval (min (* xhi ylo) (* xlo yhi))
+                          (max (* xlo ylo) (* xhi yhi))))
+          ((and (<= xlo 0)
+                (>= xhi 0)
+                (<= ylo 0)
+                (<= yhi 0))
+           ; [-, +] * [-, -]
+           (make-interval (* xhi ylo) (* xlo ylo)))
+          ((and (<= xlo 0)
+                (<= xhi 0)
+                (>= ylo 0)
+                (>= yhi 0))
+           ; [-, -] * [+, +]
+           (make-interval (* xlo yhi) (* xhi ylo)))
+          ((and (<= xlo 0)
+                (<= xhi 0)
+                (<= ylo 0)
+                (>= yhi 0))
+           ; [-, -] * [-, +]
+           (make-interval (* xlo yhi) (* xlo ylo)))
+          ((and (<= xlo 0)
+                (<= xhi 0)
+                (<= ylo 0)
+                (<= yhi 0))
+           ; [-, -] * [-, -]
+           (make-interval (* xhi yhi) (* xlo ylo))))))
+
+(define aaaa (make-interval 2 4))
+
+(define bbbb (make-interval -2 4))
+
+(define cccc (make-interval -4 -2))
+
+(mul-interval aaaa aaaa) ; (4 . 16)
+(mul-interval aaaa bbbb) ; (-8 . 16)
+(mul-interval aaaa cccc) ; (-16 . -4)
+(mul-interval bbbb aaaa) ; (-8 . 16)
+(mul-interval bbbb bbbb) ; (-8 . 16)
+(mul-interval bbbb cccc) ; (-16 . 8)
+(mul-interval cccc aaaa) ; (-16 . -4)
+(mul-interval cccc bbbb) ; (-16 . 8)
+(mul-interval cccc cccc) ; (4 . 16)
