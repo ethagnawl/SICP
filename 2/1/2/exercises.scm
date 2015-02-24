@@ -418,3 +418,31 @@ Exercise 2.11
 (mul-interval cccc aaaa) ; (-16 . -4)
 (mul-interval cccc bbbb) ; (-16 . 8)
 (mul-interval cccc cccc) ; (4 . 16)
+
+
+#|
+Exercise 2.12
+|#
+
+(define (make-center-width c w)
+  (make-interval (- c w) (+ c w)))
+
+(define (center i)
+  (/ (+ (lower-bound i) (upper-bound i)) 2))
+
+(define (width i)
+  (/ (- (upper-bound i) (lower-bound i)) 2))
+
+(define (make-center-percent c p)
+  (make-center-width c (* c (/ p 100.0))))
+
+(define (percent i)
+  (* 100.0 (/ (width i) (center i))))
+
+(define a (make-center-percent 5 20))
+
+a ; (4.0 . 6.0)
+(center a) ; 5.0
+(width a) ; 1.0
+(percent a) ; 20.0
+
