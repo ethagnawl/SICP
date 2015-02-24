@@ -137,3 +137,16 @@ Exercise 2.22
   (iter items null))
 
 (square-list (list 1 2 3 4 5)) ; (1 4 9 16 25)
+
+
+#|
+Exercise 2.23
+|#
+
+(define (for-each f xs)
+  (map f xs)
+  #true)
+
+(for-each (lambda (x) (newline) (display x)) (list 1 2 3 4 5))
+
+
