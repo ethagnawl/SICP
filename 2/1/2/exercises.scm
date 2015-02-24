@@ -467,3 +467,20 @@ Exercise 2.13
                                 (div-interval one r2)))))
 
 
+#|
+Exercise 2.14
+|#
+
+; http://www.billthelizard.com/2010/12/sicp-212-216-extended-exercise-interval.html
+
+(define a (make-center-percent 100 5)) ; (95.0 . 105.0)
+(define b (make-center-percent 200 2)) ; (196.0 . 204.0)
+(define aa (div-interval a a)) ; (0.9047619047619049 . 1.1052631578947367)
+(define ab (div-interval a b)) ; (0.46568627450980393 . 0.5357142857142857)
+(center aa) ; 1.0050125313283207
+(center ab) ; 0.5007002801120448
+(percent aa) ; 9.97506234413964
+(percent ab) ; 6.993006993006991
+
+(define apb1 (par1 a b)) ; (60.25889967637541 . 73.6082474226804)
+(define apb2 (par2 a b)) ; (63.986254295532646 . 69.32038834951456)
