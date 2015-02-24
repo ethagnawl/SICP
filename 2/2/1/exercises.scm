@@ -94,4 +94,46 @@ Exercise 2.21
 (square-list-w-map (list 1 2 3 4 5)) ; '(1 4 9 16 25)
 
 
+#|
+Exercise 2.22
+|#
 
+; http://www.billthelizard.com/2011/01/sicp-221-223-mapping-over-lists.html
+
+(define (square n) (* n n))
+
+; (define (square-list items)
+;   (define (iter things answer)
+;     (if (null? things)
+;       answer
+;       (iter (cdr things)
+;             ; this cons-es the answer onto the front of the answer list
+              ; resulting in a reversed answer list
+;             (cons (square (car things))
+;                   answer))))
+;   (iter items null))
+
+; (define (square-list items)
+;   (define (iter things answer)
+;     (if (null? things)
+;       answer
+;       (iter (cdr things)
+              ; each cons creates a list containing the previous answer (which
+              ; itself is a list) and the new int.
+              ; e.g. (cons (list) 1) => (() . 1)
+;             (cons answer
+;                   (square (car things))))))
+;   (iter items null))
+
+; (square-list-w-map (list 1 2 3 4 5)) ; (((((() . 1) . 4) . 9) . 16) . 25)
+
+(define (square-list items)
+  (define (iter things answer)
+    (if (null? things)
+      answer
+      (iter (cdr things)
+            (append answer
+                    (list (square (car things)))))))
+  (iter items null))
+
+(square-list (list 1 2 3 4 5)) ; (1 4 9 16 25)
