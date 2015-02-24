@@ -486,3 +486,20 @@ Exercise 2.14
 
 (define apb1 (par1 a b)) ; (60.25889967637541 . 73.6082474226804)
 (define apb2 (par2 a b)) ; (63.986254295532646 . 69.32038834951456)
+
+
+#|
+Exercise 2.15
+|#
+
+; http://www.billthelizard.com/2010/12/sicp-212-216-extended-exercise-interval.html
+
+; We used the ratios R1/R1 and R2/R2 to change the formula and said that it was
+; okay because that's just like multiplying by 1. But R1 and R2 represent
+; resistor values, which are intervals, and we saw in exercise 2.14 that dividing
+; an interval by itself doesn't equal 1, it just approximates it. Transforming
+; the equation in this way introduces error. That's why the observation that we
+; can get tighter error bounds if we avoid repeating variables that represent
+; uncertain numbers is correct.
+
+
