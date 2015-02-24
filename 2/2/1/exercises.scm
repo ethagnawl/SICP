@@ -72,3 +72,26 @@ Exercise 2.20
 
 (same-parity 2 3 4 5) ; (2 4)
 
+
+#|
+Exercise 2.21
+|#
+
+(define (square-list-wo-map items)
+  (if (null? items)
+    (list)
+    (cons
+      (* (car items) (car items))
+      (square-list-wo-map (cdr items)))))
+
+(square-list-wo-map (list 1 2 3 4 5)) ; '(1 4 9 16 25)
+
+(define (square-list-w-map items)
+  (map
+    (lambda (n) (* n n))
+    items))
+
+(square-list-w-map (list 1 2 3 4 5)) ; '(1 4 9 16 25)
+
+
+
