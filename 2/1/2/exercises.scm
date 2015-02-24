@@ -424,6 +424,8 @@ Exercise 2.11
 Exercise 2.12
 |#
 
+; http://www.billthelizard.com/2010/12/sicp-212-216-extended-exercise-interval.html
+
 (define (make-center-width c w)
   (make-interval (- c w) (+ c w)))
 
