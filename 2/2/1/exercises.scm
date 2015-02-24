@@ -57,3 +57,18 @@ Exercise 2.19
 (cc 100 uk-coins) ; 104561
 
 (cc 100 (my-reverse uk-coins)) ; order does not matter
+
+
+#|
+Exercise 2.20
+|#
+
+(define (same-parity int . lst)
+  (let ([parity (if (odd? int) odd? even?)]
+        [memo (cons int lst)])
+    (filter parity memo)))
+
+(same-parity 1 2 3 4) ; (1 3)
+
+(same-parity 2 3 4 5) ; (2 4)
+
