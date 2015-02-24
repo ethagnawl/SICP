@@ -503,3 +503,20 @@ Exercise 2.15
 ; uncertain numbers is correct.
 
 
+#|
+Exercise 2.16
+|#
+
+; In short, no we cannot design an interval arithmetic package that does not
+; have this shortcoming in the general case. The best we can do, as was
+; indicated in the previous exercise, is to try and write formulas that avoid
+; repeating variables that represent intervals. This is not always possible.
+
+; https://en.wikipedia.org/wiki/Interval_arithmetic#Dependency_problem
+; If an interval occurs several times in a calculation using parameters, and
+; each occurrence is taken independently then this can lead to an unwanted
+; expansion of the resulting intervals.
+
+; In general, it can be shown that the exact range of values can be achieved,
+; if each variable appears only once and if f is continuous inside the box.
+; However, not every function can be rewritten this way.
