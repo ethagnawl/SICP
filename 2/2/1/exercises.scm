@@ -171,3 +171,49 @@ Exercise 2.24
 ;  3  4
 
 
+#|
+Exercise 2.25
+|#
+
+; (1 3 (5 7) 9)
+
+(car
+  (cdr
+    (car
+      (cdr
+        (cdr '(1 3 (5 7) 9)))))) ; 7
+
+; also
+(cadar (cddr '(1 3 (5 7) 9))) ; 7
+
+
+; ((7))
+(car
+  (car '((7)))) ; 7
+
+; also
+(caar '((7))) ; 7
+
+
+; (1 (2 (3 (4 (5 (6 7))))))
+
+(car
+  (cdr
+    (car
+      (cdr
+        (car
+          (cdr
+            (car
+              (cdr
+                (car
+                  (cdr
+                    (car
+                      (cdr '(1 (2 (3 (4 (5 (6 7)))))))))))))))))) ; 7
+
+; also
+
+(cadadr
+  (cadadr
+    (cadadr '(1 (2 (3 (4 (5 (6 7))))))))) ; 7
+
+
