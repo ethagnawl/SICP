@@ -150,3 +150,24 @@ Exercise 2.23
 (for-each (lambda (x) (newline) (display x)) (list 1 2 3 4 5))
 
 
+#|
+Exercise 2.24
+|#
+
+(list 1 (list 2 (list 3 4)))
+
+; result
+; (1 (2 (3 4)))
+
+; box
+; [|->][|()]
+ ; 1    [|->][|()]
+       ; 2    [|->][|()]
+             ; 3    4
+; tree
+; /\
+;1 /\
+; 2 /\
+;  3  4
+
+
