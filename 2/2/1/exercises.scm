@@ -250,3 +250,21 @@ Exercise 2.27
 (deep-reverse '(1 2 3)) ; (3 2 1)
 (deep-reverse '(1 2 3 (4 5 6))) ; ((6 5 4) 3 2 1)
 (deep-reverse '((1 2) ((3 4) (5 6 7)))) ; (((7 6 5) (4 3)) (2 1))
+
+
+#|
+Exercise 2.28
+|#
+
+; inspired by https://kelvinh.github.io/wiki/sicp/#sec-2-28
+
+(define (fringe items)
+  (letrec ([iter (lambda (items result)
+                   (cond ((null? items) result)
+                         ((not (pair? items)) (append result (list items)))
+                         (else (iter (cdr items) (iter (car items) result)))))])
+    (iter items (list))))
+
+(define x (list (list 1 2) (list 3 4)))
+(fringe x) ; (1 2 3 4)
+(fringe (list x x)) ; (1 2 3 4 1 2 3 4)
