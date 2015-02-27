@@ -230,3 +230,23 @@ Exercise 2.26
 (cons x y) ; ((1 2 3) 4 5 6)
 
 (list x y); ((1 2 3) (4 5 6))
+
+
+#|
+Exercise 2.27
+|#
+
+(define (deep-reverse l)
+
+  (letrec ([iter (lambda (inner-l memo)
+                   (cond
+                     ((null? inner-l) memo)
+                     ((list? (car inner-l))
+                       (iter (cdr inner-l) (cons (iter (car inner-l) (list)) memo)))
+                     (else
+                       (iter (cdr inner-l) (cons (car inner-l) memo)))))])
+    (iter l (list))))
+
+(deep-reverse '(1 2 3)) ; (3 2 1)
+(deep-reverse '(1 2 3 (4 5 6))) ; ((6 5 4) 3 2 1)
+(deep-reverse '((1 2) ((3 4) (5 6 7)))) ; (((7 6 5) (4 3)) (2 1))
