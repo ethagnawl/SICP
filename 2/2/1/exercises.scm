@@ -268,3 +268,95 @@ Exercise 2.28
 (define x (list (list 1 2) (list 3 4)))
 (fringe x) ; (1 2 3 4)
 (fringe (list x x)) ; (1 2 3 4 1 2 3 4)
+
+
+#|
+Exercise 2.29
+|#
+
+; http://www.billthelizard.com/2011/02/sicp-229-binary-mobiles.html
+
+(define (make-mobile left right) (list left right))
+
+(define (make-branch length structure) (list length structure))
+
+(define (left-branch mobile) (car mobile))
+
+(define (right-branch mobile) (cadr mobile))
+
+(define (branch-length branch) (car branch))
+
+(define (branch-structure branch) (cadr branch))
+
+(define (branch-weight branch)
+  (if
+    (pair? (branch-structure branch))
+      (total-weight (branch-structure branch))
+      (branch-structure branch)))
+
+(define (total-weight mobile)
+  (+
+    (branch-weight (left-branch mobile))
+    (branch-weight (right-branch mobile))))
+
+(define (branch-torque branch)
+  (*
+    (branch-length branch)
+    (branch-weight branch)))
+
+(define (branch-balanced? branch)
+  (if
+    (pair? (branch-structure branch))
+      (balanced? (branch-structure branch))
+      true))
+
+(define (balanced? mobile)
+  (and
+    (=
+      (branch-torque (left-branch mobile))
+      (branch-torque (right-branch mobile)))
+    (branch-balanced? (left-branch mobile))
+    (branch-balanced? (right-branch mobile))))
+
+(define balanced-mobile (make-mobile (make-branch 2 3) (make-branch 2 3)))
+
+(define unbalanced-mobile (make-mobile (make-branch 2 3) (make-branch 4 5)))
+
+(total-weight balanced-mobile) ; 6
+
+(total-weight unbalanced-mobile) ; 8
+
+(balanced? balanced-mobile) ; #t
+
+(balanced? unbalanced-mobile) ; #f
+
+(define unbalanced-compound-mobile
+  (make-mobile
+    (make-branch 5 balanced-mobile)
+    (make-branch 3 unbalanced-mobile)))
+
+(total-weight unbalanced-compound-mobile) ; 14
+
+(balanced? unbalanced-compound-mobile) ; #f
+
+(define balanced-compound-mobile
+  (make-mobile
+    (make-branch 10 balanced-mobile)
+    (make-branch 12 5)))
+
+(total-weight balanced-compound-mobile) ; 11
+
+(balanced? ) ; #t
+
+(define (new-make-mobile left right) (cons left right))
+
+(define (new-make-branch length structure) (cons length structure))
+
+(define (new-right-branch mobile) (cdr mobile))
+
+(define (new-branch-structure branch) (cdr branch))
+
+(make-mobile (make-branch 2 3) (make-branch 2 3)) ; ((2 3) (2 3))
+
+(new-make-mobile (new-make-branch 2 3) (new-make-branch 2 3)) ; ((2 . 3) 2 . 3)
+
