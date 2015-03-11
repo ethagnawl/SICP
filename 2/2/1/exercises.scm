@@ -360,3 +360,37 @@ Exercise 2.29
 
 (new-make-mobile (new-make-branch 2 3) (new-make-branch 2 3)) ; ((2 . 3) 2 . 3)
 
+
+#|
+Exercise 2.30
+|#
+
+(define sample-list
+  (list 1
+        (list 2 (list 3 4) 5)
+        (list 6 7)))
+
+(define (square-tree-direct tree)
+  (let ([square (lambda (n) (* n n))])
+  (cond
+    ((null? tree) '())
+    ((not (pair? tree)) (square tree))
+    (else
+      (cons
+        (square-tree-direct (car tree))
+        (square-tree-direct (cdr tree)))))))
+
+(square-tree-direct sample-list) ; '(1 (4 (9 16) 25) (36 49))
+
+(define (square-tree-ho tree)
+  (let ([square (lambda (n) (* n n))])
+    (map
+      (lambda (subtree)
+        (if (not (pair? subtree))
+          (square subtree)
+          (square-tree-ho subtree)))
+      tree)))
+
+(square-tree-ho sample-list) ; '(1 (4 (9 16) 25) (36 49))
+
+
