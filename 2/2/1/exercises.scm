@@ -407,3 +407,24 @@ Exercise 2.31
     tree))
 
 (tree-map (lambda (n) (* n n)) sample-list) ; '(1 (4 (9 16) 25) (36 49))
+
+
+#|
+Exercise 2.31
+|#
+
+(define (subsets s)
+  (if (null? s)
+    (list s)
+    (let ([head (car s)]
+          [tail (subsets (cdr s))])
+      (append
+        tail
+        (map (lambda (x) (cons head x)) tail)))))
+
+      ; (append '(() (2)) '((1) (1 2))) == (() (2) (1) (1 2))
+
+(define subset-list (list 1 2 3))
+
+(subsets subset-list) ; '(() (3) (2) (2 3) (1) (1 3) (1 2) (1 2 3))
+
