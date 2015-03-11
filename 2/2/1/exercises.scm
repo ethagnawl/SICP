@@ -394,3 +394,16 @@ Exercise 2.30
 (square-tree-ho sample-list) ; '(1 (4 (9 16) 25) (36 49))
 
 
+#|
+Exercise 2.31
+|#
+
+(define (tree-map func tree)
+  (map
+    (lambda (subtree)
+      (if (not (pair? subtree))
+        (func subtree)
+        (tree-map func subtree)))
+    tree))
+
+(tree-map (lambda (n) (* n n)) sample-list) ; '(1 (4 (9 16) 25) (36 49))
