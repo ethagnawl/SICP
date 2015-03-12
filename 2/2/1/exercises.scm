@@ -428,3 +428,37 @@ Exercise 2.32
 
 (subsets subset-list) ; '(() (3) (2) (2 3) (1) (1 3) (1 2) (1 2 3))
 
+
+#|
+Exercise 2.33
+|#
+
+(define (accumulate op initial sequence)
+  (if (null? sequence)
+    initial
+    (op (car sequence)
+        (accumulate op initial (cdr sequence)))))
+
+(define (my-map proc lst)
+  (accumulate
+    (lambda (x y) (cons (proc x) y))
+    '()
+    lst))
+
+(my-map (lambda (x) (* x x)) (list 1 2 3)) ; (1 4 9)
+
+(define (my-append lst1 lst2)
+  (accumulate
+    cons
+    lst2
+    lst1))
+
+(my-append '(1 2) '(3)) ; (1 2 3)
+
+(define (my-length lst)
+  (accumulate
+    (lambda (_ x) (+ x 1))
+    0
+    lst))
+
+(my-length (list 1 2 3 4)) ; 4
