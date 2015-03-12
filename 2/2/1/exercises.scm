@@ -410,7 +410,7 @@ Exercise 2.31
 
 
 #|
-Exercise 2.31
+Exercise 2.32
 |#
 
 (define (subsets s)
