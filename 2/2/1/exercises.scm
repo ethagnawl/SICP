@@ -478,3 +478,29 @@ Exercise 2.34
     coefficient-sequence))
 
 (horner-eval 2 (list 1 3 0 5)) ; 47
+
+
+#|
+Exercise 2.35
+|#
+
+; http://www.billthelizard.com/2011/04/sicp-235-counting-leaves-of-tree.html
+
+(define (enumerate-tree tree)
+  (cond ((null? tree) null)
+        ((not (pair? tree)) (list tree))
+        (else (append (enumerate-tree (car tree))
+                      (enumerate-tree (cdr tree))))))
+
+(define (accum-count-leaves tree)
+  (let (
+        [flattened-tree (enumerate-tree tree)]
+        [const-1 (lambda (x) 1)])
+    (accumulate
+      +
+      0
+      (map
+        const-1
+        flattened-tree))))
+
+(accum-count-leaves (list 1 (list 1 2 3))) ; 4
