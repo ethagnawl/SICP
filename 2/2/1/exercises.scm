@@ -462,3 +462,19 @@ Exercise 2.33
     lst))
 
 (my-length (list 1 2 3 4)) ; 4
+
+
+#|
+Exercise 2.34
+|#
+
+; http://www.billthelizard.com/2011/04/sicp-234-horners-rule.html
+
+(define (horner-eval x coefficient-sequence)
+  (accumulate
+    (lambda (this-coeff higher-terms)
+      (+ (* x higher-terms) this-coeff))
+    0
+    coefficient-sequence))
+
+(horner-eval 2 (list 1 3 0 5)) ; 47
