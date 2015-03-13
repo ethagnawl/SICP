@@ -504,3 +504,16 @@ Exercise 2.35
         flattened-tree))))
 
 (accum-count-leaves (list 1 (list 1 2 3))) ; 4
+
+
+#|
+Exercise 2.36
+|#
+
+(define (accumulate-n op init seqs)
+  (if (null? (car seqs))
+    '()
+    (cons (accumulate op init (map car seqs))
+          (accumulate-n op init (map cdr seqs)))))
+
+(accumulate-n + 0 '((1 2 3) (4 5 6) (7 8 9) (10 11 12))) ; (22 26 30)
