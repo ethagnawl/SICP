@@ -517,3 +517,39 @@ Exercise 2.36
           (accumulate-n op init (map cdr seqs)))))
 
 (accumulate-n + 0 '((1 2 3) (4 5 6) (7 8 9) (10 11 12))) ; (22 26 30)
+
+
+#|
+Exercise 2.37
+|#
+
+; http://www.billthelizard.com/2011/04/sicp-236-237-matrix-algebra.html
+
+(define (dot-product v w) (accumulate + 0 (map * v w)))
+
+(dot-product '(1 2 3) '(4 5 6)) ; 32
+
+(define (matrix-*-vector m v) (map (lambda (row) (dot-product row v)) m))
+
+(matrix-*-vector '((1 2 3) (4 5 6) (7 8 9)) '(10 10 10)) ; (60 150 240)
+
+(define (transpose mat) (accumulate-n cons '() mat))
+
+(transpose '((1  2  3)
+             (4  5  6)
+             (7  8  9)
+             (10 11 12)))
+
+          ; ((1 4 7 10)
+          ;  (2 5 8 11)
+          ;  (3 6 9 12))
+
+(define (matrix-*-matrix m n)
+  (let ((cols (transpose n)))
+    (map (lambda (row) (matrix-*-vector cols row)) m)))
+
+(define a '((14 9 3) (2 11 15) (0 12 17) (5 2 3)))
+
+(define b '((12 25) (9 10) (8 5)))
+
+(matrix-*-matrix a b) ; ((273 455) (243 235) (244 205) (102 160))
