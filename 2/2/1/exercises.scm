@@ -593,3 +593,22 @@ Exercise 2.38
 ; (2 + 3) + 4 == 2 + (3 + 4)
 
 
+#|
+Exercise 2.39
+|#
+
+(define (foldr-reverse sequence)
+  (fold-right
+    (lambda (x y) (append y (list x)))
+    '()
+    sequence))
+
+(foldr-reverse '(1 2 3)) ; (3 2 1)
+
+(define (foldl-reverse sequence)
+  (fold-left
+    (lambda (x y) (cons y x))
+    '()
+    sequence))
+
+(foldl-reverse '(1 2 3)) ; (3 2 1)
