@@ -553,3 +553,43 @@ Exercise 2.37
 (define b '((12 25) (9 10) (8 5)))
 
 (matrix-*-matrix a b) ; ((273 455) (243 235) (244 205) (102 160))
+
+
+#|
+Exercise 2.38
+|#
+
+; http://www.billthelizard.com/2011/04/sicp-238-239-folding-left-and-right.html
+
+(define (fold-right op initial sequence)
+   (if (null? sequence)
+       initial
+       (op (car sequence)
+           (fold-right op initial (cdr sequence)))))
+
+(define (fold-left op initial sequence)
+   (define (iter result rest)
+     (if (null? rest)
+         result
+         (iter (op result (car rest))
+               (cdr rest))))
+   (iter initial sequence))
+
+(fold-right / 1 (list 1 2 3)) ; 3/2
+
+(fold-left / 1 (list 1 2 3)) ; 1/6
+
+(fold-right list null (list 1 2 3)) ; (1 (2 (3 ())))
+
+(fold-left list null (list 1 2 3)) ; (((() 1) 2) 3)
+
+; Commutativity and associativity assure that foldl and foldr will produce the
+; same output.
+
+; Commutativity
+; A + B = B + A
+
+; Associativity
+; (2 + 3) + 4 == 2 + (3 + 4)
+
+
