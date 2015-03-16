@@ -673,3 +673,34 @@ Exercise 2.40
         (enumerate-interval 1 n)))))
 
 (prime-sum-pairs 6) ; ((2 1 3) (3 2 5) (4 1 5) (4 3 7) (5 2 7) (6 1 7) (6 5 11))
+
+
+#|
+Exercise 2.41
+|#
+
+; write a procedure to find all ordered triples of distinct positive integers
+; i, j, and k less than or equal to a given integer n that sum to a given
+; integer s.
+
+(define (ordered-triples n)
+   (flatmap (lambda (i)
+      (flatmap (lambda (j)
+         (map (lambda (k)
+                (list i j k))
+              (enumerate-interval 1 (- j 1))))
+       (enumerate-interval 1 (- i 1))))
+    (enumerate-interval 1 n)))
+
+(ordered-triples 4) ; ((3 2 1) (4 2 1) (4 3 1) (4 3 2))
+
+(define (ordered-triples-for-sum-s n s)
+  (let ([triples (ordered-triples n)])
+    (filter
+      (lambda (triple)
+        (match-let
+          ([(list first second third) triple])
+          (= s (foldl + 0 (list first second third)))))
+      triples)))
+
+(ordered-triples-for-sum-s 100 10) ; ((5 3 2) (5 4 1) (6 3 1) (7 2 1))
