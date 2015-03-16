@@ -612,3 +612,64 @@ Exercise 2.39
     sequence))
 
 (foldl-reverse '(1 2 3)) ; (3 2 1)
+
+
+#|
+Exercise 2.40
+|#
+
+; Given a positive integer n, find all ordered pairs of distinct positive
+; integers i and j, where 1 <= j < i <= n, such that (i + j) is prime.
+
+; http://www.billthelizard.com/2011/05/sicp-240-241-nested-mappings.html
+
+(enumerate-interval 1 4) ; (1 2 3 4)
+
+(define (enumerate-interval low high)
+  (if (> low high)
+    '()
+    (cons low (enumerate-interval (+ low 1) high))))
+
+(require math/number-theory)
+
+(define (flatmap proc seq)
+     (accumulate append null (map proc seq)))
+
+; ((1) (1 4) (1 4 9) (1 4 9 16))
+; (map
+;   (lambda (n)
+;     (map
+;       (lambda (nn) (* nn nn))
+;       (enumerate-interval 1 n)))
+;   (list 1 2 3 4))
+
+; (1 1 4 1 4 9 1 4 9 16)
+; (flatmap
+;   (lambda (n)
+;     (map
+;       (lambda (nn) (* nn nn))
+;       (enumerate-interval 1 n)))
+;   (list 1 2 3 4))
+
+(define (prime-sum? pair)
+     (prime? (+ (car pair) (cadr pair))))
+
+(define (make-pair-sum pair)
+     (append
+       (list (car pair))
+       (list (cadr pair))
+       (list (+ (car pair) (cadr pair)))))
+
+(define (prime-sum-pairs n)
+  (map
+    make-pair-sum
+    (filter
+      prime-sum?
+      (flatmap
+        (lambda (i)
+          (map
+            (lambda (j) (list i j))
+            (enumerate-interval 1 (- i 1))))
+        (enumerate-interval 1 n)))))
+
+(prime-sum-pairs 6) ; ((2 1 3) (3 2 5) (4 1 5) (4 3 7) (5 2 7) (6 1 7) (6 5 11))
