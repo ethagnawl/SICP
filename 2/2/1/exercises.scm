@@ -762,3 +762,30 @@ Exercise 2.42
 (queens 4)
 
 
+#|
+Exercise 2.43
+|#
+
+; http://www.billthelizard.com/2011/06/sicp-242-243-n-queens-problem.html
+
+; why does flipping the nested mapping in flatmap cause this version of the
+; program to run more slowly than the original
+
+; (flatmap
+;   (lambda (new-row)
+;     (map (lambda (rest-of-queens)
+;            (adjoin-position new-row k rest-of-queens))
+;          (queen-cols (- k 1))))
+;   (enumerate-interval 1 board-size))
+
+; In the original solution, queen-cols is called once for each column in the
+; board. This is an expensive procedure to call, since it generates the sequence
+; of all possible ways to place k queens in k columns. By moving queen-cols so it
+; gets called by flatmap, we're transforming a linear recursive process to a
+; tree-recursive process. The flatmap procedure is called for each row of the kth
+; column, so the new procedure is generating all the possible solutions for the
+; first k - 1 columns for each one of these rows.
+
+ ; If it takes time T to execute the original version of queens for a given
+ ; board size, we can expect the new version to take roughly Tboard-size time
+ ; to execute.
