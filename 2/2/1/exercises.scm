@@ -826,3 +826,22 @@ Exercise 2.44
     (let ((half (beside (flip-horiz quarter) quarter)))
       (below (flip-vert half) half))))
 
+
+#|
+Exercise 2.45
+|#
+
+(define (split x y)
+  (lambda (painter n)
+    (if (= n 0)
+      painter
+      (let ((smaller ((split x y) painter (- n 1))))
+        (x painter (y smaller smaller))))))
+
+(define right-split (split beside below))
+
+; (paint (right-split einstein 6))
+
+(define up-split (split below beside))
+
+; (paint (up-split einstein 6))
