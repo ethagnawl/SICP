@@ -845,3 +845,99 @@ Exercise 2.45
 (define up-split (split below beside))
 
 ; (paint (up-split einstein 6))
+
+
+#|
+Exercise 2.46
+|#
+
+; http://www.billthelizard.com/2011/09/sicp-246-248-frames-painters.html
+
+(define (make-vect x y)
+  (cons x y))
+
+(define (xcor-vect v)
+  (car v))
+
+(define (ycor-vect v)
+  (cdr v))
+
+(define (add-vect u v)
+  (make-vect
+    (+ (xcor-vect u) (xcor-vect v))
+    (+ (ycor-vect u) (ycor-vect v))))
+
+(define (sub-vect u v)
+  (make-vect
+    (- (xcor-vect u) (xcor-vect v))
+    (- (ycor-vect u) (ycor-vect v))))
+
+(define (scale-vect s v)
+  (make-vect
+    (* s (xcor-vect v))
+    (* s (ycor-vect v))))
+
+(define u (make-vect 2 4))    ; (2 . 4)
+(define v (make-vect 3 1))    ; (3 . 1)
+(define w (add-vect u v))     ; (5 . 5)
+(define x (sub-vect w u))     ; (3 . 1)
+(define y (scale-vect 3 w))   ; (15 . 15)
+
+
+#|
+Exercise 2.47
+|#
+
+(define (list-make-frame origin edge1 edge2)
+  (list origin edge1 edge2))
+
+(define (list-origin-frame frame) (car frame))
+
+(define (list-edge1-frame frame) (cadr frame))
+
+(define (list-edge2-frame frame) (caddr frame))
+
+; ((0 . 0) (2 . 4) (3 . 1))
+(define list-frame (list-make-frame (make-vect 0 0) (make-vect 2 4) (make-vect 3 1)))
+
+(list-origin-frame list-frame) ; (0 .0)
+
+(list-edge1-frame list-frame) ; (2 . 4)
+
+(list-edge2-frame list-frame) ; (3 . 1)
+
+
+(define (cons-make-frame origin edge1 edge2)
+  (cons origin (cons edge1 edge2)))
+
+(define (cons-origin-frame frame) (car frame))
+
+(define (cons-edge1-frame frame) (cadr frame))
+
+(define (cons-edge2-frame frame) (cddr frame))
+
+; ((0 . 0) (2 . 4) 3 .1)
+(define cons-frame (foo (make-vect 0 0) (make-vect 2 4) (make-vect 3 1)))
+
+(cons-origin-frame cons-frame) ; (0 . 0)
+
+(cons-edge1-frame cons-frame) ; (2 . 4)
+
+(cons-edge2-frame cons-frame) ; (3 . 1)
+
+
+#|
+Exercise 2.48
+|#
+
+(define (make-segment v1 v2) (cons v1 v2))
+
+(define (start-segment segment) (car segment))
+
+(define (end-segment segment) (cdr segment))
+
+(define seg (make-segment (make-vect 0 0) (make-vect 1 1))) ; ((0 . 0) 1 . 1)
+
+(start-segment seg) ; (0 . 0)
+
+(end-segment seg) ; (1 . 1)
