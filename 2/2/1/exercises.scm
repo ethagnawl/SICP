@@ -1119,3 +1119,36 @@ Exercise 2.50
 (paint (rotate-270 einstein))
 
 
+#|
+Exercise 2.51
+|#
+
+; http://www.billthelizard.com/2012/01/sicp-250-251-transforming-and-combining.html
+
+(define (below-a painter1 painter2)
+  (let* ([split-point (make-vect 0.0 0.5)]
+         [paint-bottom ((transform-painter  (make-vect 0.0 0.0)
+                                            (make-vect 1.0 0.0)
+                                            split-point)
+                        painter1)]
+         [paint-top ((transform-painter   split-point
+                                          (make-vect 1.0 0.5)
+                                          (make-vect 0.0 1.0))
+                     painter2)])
+    (lambda (frame)
+      (paint-bottom frame)
+      (paint-top frame))))
+
+(paint (below-a einstein einstein))
+
+
+(define (rotate-90 painter)
+  ((transform-painter (make-vect 1.0 0.0)
+                      (make-vect 1.0 1.0)
+                      (make-vect 0.0 0.0))
+   painter))
+
+(define (below-b painter1 painter2)
+  (rotate-90 (beside (rotate-270 painter1) (rotate-270 painter2))))
+
+(paint (below-b einstein einstein))
