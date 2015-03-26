@@ -1080,3 +1080,42 @@ Exercise 2.49
 ; (paint wave)
 
 
+#|
+Exercise 2.50
+|#
+
+; http://www.billthelizard.com/2012/01/sicp-250-251-transforming-and-combining.html
+
+(define (flip-vertical painter)
+  ((transform-painter (make-vect 0.0 1.0)
+                      (make-vect 1.0 1.0)
+                      (make-vect 0.0 0.0))
+   painter))
+
+(paint (flip-vertical einstein))
+
+(define (flip-horizontal painter)
+  ((transform-painter (make-vect 1.0 0.0)
+                      (make-vect 0.0 0.0)
+                      (make-vect 1.0 1.0))
+   painter))
+
+(paint (flip-horizontal einstein))
+
+(define (rotate-180 painter)
+  ((transform-painter (make-vect 1.0 1.0)
+                      (make-vect 0.0 1.0)
+                      (make-vect 1.0 0.0))
+   painter))
+
+(paint (rotate-180 einstein))
+
+(define (rotate-270 painter)
+  ((transform-painter (make-vect 0.0 1.0)
+                      (make-vect 0.0 0.0)
+                      (make-vect 1.0 1.0))
+   painter))
+
+(paint (rotate-270 einstein))
+
+
